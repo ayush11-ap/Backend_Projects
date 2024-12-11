@@ -30,7 +30,7 @@ const Sidebar = () => {
     },
   ]);
   return (
-    <div className="sidebar-container border-2 border-green-200 lg:flex lg:flex-[0.3] lg:flex-col">
+    <div className="sidebar-container lg:flex lg:flex-[0.3] lg:flex-col">
       <div className="sb-header lg:bg-white lg:rounded-2xl lg:py-3 lg:px-1 lg:m-2 lg:flex lg:justify-between">
         <div>
           <IconButton>

@@ -4,6 +4,7 @@ import WorkArea from "./WorkArea";
 import ChatArea from "./ChatArea";
 import WelcomePage from "./WelcomePage";
 import CreateGroups from "./CreateGroups";
+import UserGroups from "./UserGroups";
 
 const MainContainer = () => {
   // const [userData, setUserData] = useState([
@@ -20,7 +21,8 @@ const MainContainer = () => {
       {/* <WorkArea /> */}
       {/* <ChatArea /> */}
       {/* <WelcomePage /> */}
-      <CreateGroups />
+      {/* <CreateGroups /> */}
+      <UserGroups />
     </div>
   );
 };

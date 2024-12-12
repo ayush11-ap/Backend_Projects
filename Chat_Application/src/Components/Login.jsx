@@ -28,11 +28,11 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container lg:h-[90vh] lg:w-[90vw] lg:bg-[#f4f5f8] lg:rounded-3xl lg:flex lg:shadow-sky-400">
+    <div className="login-container lg:h-[90vh] lg:w-[90vw] lg:bg-[#f4f5f8] lg:rounded-3xl lg:flex lg:shadow-sky-100 shadow-xl">
       <div className="image-cont lg:flex-[0.4] lg:flex lg:justify-center lg:items-center">
         <img src={logo} alt="" />
       </div>
-      <div className="login-box lg:flex-[0.6] lg:bg-white lg:rounded-3xl lg:m-3 lg:text-sky-400 lg:font-bold lg:flex lg:flex-col lg:justify-center lg:items-center lg:gap-5">
+      <div className="login-box lg:flex-[0.6] lg:bg-white lg:rounded-3xl lg:m-3 lg:text-sky-400 lg:font-bold lg:flex lg:flex-col lg:justify-center lg:items-center lg:gap-5 lg:shadow-xl">
         <p className="text-sky-400 lg:text-2xl">Login To Your Account</p>
 
         {/* //& Input field for username */}

@@ -4,7 +4,7 @@ import { IconButton } from "@mui/material";
 
 const CreateGroups = () => {
   return (
-    <div className="createGrp-cont lg:flex-[0.7] lg:self-center lg:px-5 lg:py-3 lg:m-3 lg:bg-white lg:rounded-3xl lg:flex lg:justify-between">
+    <div className="createGrp-cont lg:flex-[0.7] lg:self-center lg:px-5 lg:py-3 lg:m-3 lg:bg-white lg:rounded-3xl lg:flex lg:justify-between shadow-[4px_4px_0px_0px_rgba(0,_0,_0,_0.3)]">
       <input
         type="text"
         placeholder="Enter Group Name"

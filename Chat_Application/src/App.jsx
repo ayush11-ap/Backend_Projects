@@ -6,8 +6,8 @@ const App = () => {
   return (
     <div>
       <div className="lg:bg-[#dddedd] lg:min-h-[100vh] lg:flex lg:justify-center lg:items-center lg:overflow-hidden">
-        {/* <MainContainer /> */}
-        <Login />
+        <MainContainer />
+        {/* <Login /> */}
       </div>
     </div>
   );

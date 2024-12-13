@@ -7,8 +7,10 @@ import DarkModeIcon from "@mui/icons-material/DarkMode";
 import { IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import ConversationData from "./ConversationData";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
+  const navigate = useNavigate();
   const [conversations, setConversations] = useState([
     {
       name: "A@Y|_|$|-|",
@@ -29,6 +31,7 @@ const Sidebar = () => {
       id: 3,
     },
   ]);
+
   return (
     <div className="sidebar-container lg:flex lg:flex-[0.3] lg:flex-col">
       <div className="sb-header lg:bg-white lg:rounded-2xl lg:py-3 lg:px-1 lg:m-2 lg:flex lg:justify-between shadow-[-3px_3px_0px_0px_rgba(0,_0,_0,_0.1)]">
@@ -38,13 +41,25 @@ const Sidebar = () => {
           </IconButton>
         </div>
         <div>
-          <IconButton>
+          <IconButton
+            onClick={() => {
+              navigate("users");
+            }}
+          >
             <PersonAddIcon />
           </IconButton>
-          <IconButton>
+          <IconButton
+            onClick={() => {
+              navigate("groups");
+            }}
+          >
             <GroupAddIcon />
           </IconButton>
-          <IconButton>
+          <IconButton
+            onClick={() => {
+              navigate("createGroups");
+            }}
+          >
             <AddBoxIcon />
           </IconButton>
           <IconButton>

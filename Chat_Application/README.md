@@ -4,4 +4,4 @@ backend : nodejs, expressjs, axios, socket.io
 
 database : mongobd atlas
 
-Completed Part 6
+Completed Part 7

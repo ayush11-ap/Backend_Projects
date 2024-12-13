@@ -5,6 +5,7 @@ import ChatArea from "./ChatArea";
 import WelcomePage from "./WelcomePage";
 import CreateGroups from "./CreateGroups";
 import UserGroups from "./UserGroups";
+import { Outlet } from "react-router-dom";
 
 const MainContainer = () => {
   // const [userData, setUserData] = useState([
@@ -18,11 +19,7 @@ const MainContainer = () => {
   return (
     <div className="main-container lg:bg-[#f4f5f8] lg:h-[90vh] lg:w-[90vw] lg:rounded-2xl lg:flex">
       <Sidebar />
-      {/* <WorkArea /> */}
-      {/* <ChatArea /> */}
-      {/* <WelcomePage /> */}
-      {/* <CreateGroups /> */}
-      <UserGroups />
+      <Outlet />
     </div>
   );
 };

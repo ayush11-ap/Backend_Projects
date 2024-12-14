@@ -4,13 +4,23 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
+import LightModeIcon from "@mui/icons-material/LightMode";
 import { IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import ConversationData from "./ConversationData";
 import { useNavigate } from "react-router-dom";
+import "./style.css";
 
 const Sidebar = () => {
   const navigate = useNavigate();
+
+  const [dark, setDark] = useState(true);
+
+  const darkModeHandler = () => {
+    setDark(!dark);
+    document.body.classList.toggle("dark");
+  };
+
   const [conversations, setConversations] = useState([
     {
       name: "A@Y|_|$|-|",
@@ -34,10 +44,10 @@ const Sidebar = () => {
 
   return (
     <div className="sidebar-container lg:flex lg:flex-[0.3] lg:flex-col">
-      <div className="sb-header lg:bg-white lg:rounded-2xl lg:py-3 lg:px-1 lg:m-2 lg:flex lg:justify-between shadow-[-3px_3px_0px_0px_rgba(0,_0,_0,_0.1)]">
+      <div className="sb-header lg:bg-white dark:bg-blue-900  lg:rounded-2xl lg:py-3 lg:px-1 lg:m-2 lg:flex lg:justify-between shadow-[-3px_3px_0px_0px_rgba(0,_0,_0,_0.1)]">
         <div>
           <IconButton>
-            <AccountCircleIcon />
+            <AccountCircleIcon className="account-icon dark:text-white" />
           </IconButton>
         </div>
         <div>
@@ -46,30 +56,31 @@ const Sidebar = () => {
               navigate("users");
             }}
           >
-            <PersonAddIcon />
+            <PersonAddIcon className="icon" />
           </IconButton>
           <IconButton
             onClick={() => {
               navigate("groups");
             }}
           >
-            <GroupAddIcon />
+            <GroupAddIcon className="icon" />
           </IconButton>
           <IconButton
             onClick={() => {
               navigate("createGroups");
             }}
           >
-            <AddBoxIcon />
+            <AddBoxIcon className="icon" />
           </IconButton>
-          <IconButton>
-            <DarkModeIcon />
+          <IconButton onClick={() => darkModeHandler()}>
+            {dark && <DarkModeIcon className="icon" />}
+            {!dark && <LightModeIcon className="icon" />}
           </IconButton>
         </div>
       </div>
       <div className="sb-search lg:bg-white lg:rounded-2xl lg:py-1 lg:px-1 lg:m-2 lg:flex lg:items-center shadow-[-4px_4px_0px_0px_rgba(0,_0,_0,_0.1)]">
         <IconButton>
-          <SearchIcon />
+          <SearchIcon className="icon" />
         </IconButton>
         <input
           type="text"

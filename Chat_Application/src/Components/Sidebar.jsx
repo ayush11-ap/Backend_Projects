@@ -10,11 +10,14 @@ import SearchIcon from "@mui/icons-material/Search";
 import ConversationData from "./ConversationData";
 import { useNavigate } from "react-router-dom";
 import "./style.css";
+import { useDispatch, useSelector } from "react-redux";
 
 const Sidebar = () => {
   const navigate = useNavigate();
 
+  const dispatch = useDispatch();
   const [dark, setDark] = useState(true);
+  // const lightTheme = useSelector((state) => state.themeKey);
 
   const darkModeHandler = () => {
     setDark(!dark);

@@ -11,7 +11,7 @@ import ConversationData from "./Components/ConversationData.jsx";
 const App = () => {
   return (
     <div>
-      <div className="lg:bg-[#dddedd] lg:min-h-[100vh] lg:flex lg:justify-center lg:items-center lg:overflow-hidden">
+      <div className="lg:bg-[#dddedd] lg:min-h-[100vh] lg:flex lg:justify-center lg:items-center lg:overflow-hidden dark:bg-gray-700">
         {/* <MainContainer /> */}
         <Routes>
           <Route path="/" element={<Login />} />

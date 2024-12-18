@@ -17,7 +17,7 @@ const MainContainer = () => {
   //   },
   // ]);
   return (
-    <div className="main-container lg:bg-[#f4f5f8] lg:h-[90vh] lg:w-[90vw] lg:rounded-2xl lg:flex">
+    <div className="main-container lg:bg-[#f4f5f8] lg:h-[90vh] lg:w-[90vw] lg:rounded-2xl lg:flex dark:bg-[#12273E] dark:border-[0.5px] dark:border-[#404872]">
       <Sidebar />
       <Outlet />
     </div>

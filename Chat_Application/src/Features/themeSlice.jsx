@@ -2,11 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const themeSlice = createSlice({
   name: "themeSlice",
-  initialState: true,
+  initialState: true, // true = dark mode
   reducers: {
-    toggleTheme: (state) => {
-      return (state = !state);
-    },
+    toggleTheme: (state) => !state, // toggle between true/false
   },
 });
 

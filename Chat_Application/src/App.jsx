@@ -4,9 +4,9 @@ import Login from "./Components/Login.jsx";
 import { Route, Routes } from "react-router-dom";
 import WelcomePage from "./Components/WelcomePage.jsx";
 import ChatArea from "./Components/ChatArea.jsx";
-import UserGroups from "./Components/UserGroups.jsx";
+import Users from "./Components/Users.jsx";
+import Groups from "./Components/Groups.jsx";
 import CreateGroups from "./Components/CreateGroups.jsx";
-import ConversationData from "./Components/ConversationData.jsx";
 
 const App = () => {
   return (
@@ -18,8 +18,8 @@ const App = () => {
           <Route path="app" element={<MainContainer />}>
             <Route path="welcome" element={<WelcomePage />} />
             <Route path="chat" element={<ChatArea />} />
-            <Route path="users" element={<UserGroups />} />
-            <Route path="groups" element={<UserGroups />} />
+            <Route path="users" element={<Users />} />
+            <Route path="groups" element={<Groups />} />
             <Route path="createGroups" element={<CreateGroups />} />
           </Route>
         </Routes>

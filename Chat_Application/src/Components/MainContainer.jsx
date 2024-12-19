@@ -4,7 +4,7 @@ import WorkArea from "./WorkArea";
 import ChatArea from "./ChatArea";
 import WelcomePage from "./WelcomePage";
 import CreateGroups from "./CreateGroups";
-import UserGroups from "./UserGroups";
+import UserGroups from "./Users";
 import { Outlet } from "react-router-dom";
 
 const MainContainer = () => {

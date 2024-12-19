@@ -2,6 +2,7 @@ import { DarkMode } from "@mui/icons-material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { AnimatePresence, motion, animate, stagger } from "motion/react";
 
 const ConversationData = ({ props }) => {
   const navigate = useNavigate();
@@ -16,11 +17,13 @@ const ConversationData = ({ props }) => {
     document.body.classList.remove("dark");
   }
   return (
-    <div
+    <motion.div
+      whileHover={{ scale: 1.01 }}
+      whileTap={{ scale: 0.95 }}
       onClick={() => {
         navigate("chat");
       }}
-      className={`conversation-container lg:grid lg:grid-cols-[52px_auto_auto] lg:grid-rows-[auto_auto] lg:gap-x-2.5 lg:p-1.25 lg:py-2 lg:my-3 lg:mx-3 lg:rounded-[20px]  ${
+      className={`conversation-container cursor-pointer lg:grid lg:grid-cols-[52px_auto_auto] lg:grid-rows-[auto_auto] lg:gap-x-2.5 lg:p-1.25 lg:py-2 lg:my-3 lg:mx-3 lg:rounded-[20px]  ${
         darkMode
           ? "dark:text-[#38BDF8]"
           : "hover:bg-[#d9d9d9] active:bg-white duration-500"
@@ -56,7 +59,7 @@ const ConversationData = ({ props }) => {
       >
         {props.timeStamp}
       </p>
-    </div>
+    </motion.div>
   );
 };
 

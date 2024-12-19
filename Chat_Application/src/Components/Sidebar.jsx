@@ -47,20 +47,20 @@ const Sidebar = () => {
   ]);
 
   return (
-    <div className="sidebar-container lg:flex lg:flex-[0.3] lg:flex-col">
+    <div className="sidebar-container flex-row lg:flex lg:flex-[0.3] lg:flex-col">
       <div
-        className={`sb-header bg-white rounded-2xl py-3 px-1 m-2 flex justify-between flex-col  ${
+        className={`sb-header bg-white rounded-2xl py-3 px-1 m-2 flex justify-between flex-col lg:flex-row  lg:flex-grow-0 ${
           darkMode
             ? "dark:bg-[#1E293B] dark:border-[0.2px] dark:border-[#404872]"
             : "shadow-[-3px_3px_0px_0px_rgba(0,_0,_0,_0.1)]"
         }`}
       >
-        <div>
+        <div className="flex flex-col">
           <IconButton>
             <AccountCircleIcon className="account-icon dark:text-[#38BDF8]" />
           </IconButton>
         </div>
-        <div>
+        <div className="flex flex-col md:flex-col lg:flex-row">
           <IconButton onClick={() => navigate("users")}>
             <PersonAddIcon className="icon dark:text-white" />
           </IconButton>

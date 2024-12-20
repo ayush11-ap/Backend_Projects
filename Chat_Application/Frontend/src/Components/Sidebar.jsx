@@ -16,7 +16,7 @@ import { toggleTheme } from "../Features/themeSlice";
 const Sidebar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const darkMode = useSelector((state) => state.themeKey); // Redux state for theme
+  const darkMode = useSelector((state) => state.themeKey);
 
   // Apply theme to the entire app
   if (darkMode) {

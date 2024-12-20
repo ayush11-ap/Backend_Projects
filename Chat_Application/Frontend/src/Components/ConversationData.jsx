@@ -23,10 +23,10 @@ const ConversationData = ({ props }) => {
       onClick={() => {
         navigate("chat");
       }}
-      className={`conversation-container cursor-pointer lg:grid lg:grid-cols-[52px_auto_auto] lg:grid-rows-[auto_auto] lg:gap-x-2.5 lg:p-1.25 lg:py-2 lg:my-3 lg:mx-3 lg:rounded-[20px]  ${
+      className={`conversation-container cursor-pointer lg:grid lg:grid-cols-[52px_auto_auto] lg:grid-rows-[auto_auto] lg:gap-x-2.5 lg:px-2 lg:py-2 lg:my-3 lg:mx-3 lg:rounded-[20px]  ${
         darkMode
-          ? "dark:text-[#38BDF8]"
-          : "hover:bg-[#d9d9d9] active:bg-white duration-500"
+          ? "dark:text-[#38BDF8] dark:border-[0.2px] dark:border-[#404872]"
+          : "hover:bg-[#d9d9d9] active:bg-white duration-300 shadow-[-3px_3px_0px_0px_rgba(0,_0,_0,_0.1)]"
       }`}
     >
       <p

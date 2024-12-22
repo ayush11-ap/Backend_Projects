@@ -1,6 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const { default: mongoose } = require("mongoose");
+const userRoutes = require("./Routes/userRoutes");
 
 const app = express();
 dotenv.config();
@@ -18,6 +19,8 @@ connectDb();
 app.get("/", (req, res) => {
   res.send("API is working1");
 });
+
+app.use("user/", userRoutes);
 
 const PORT = process.env.PORT || 8080;
 

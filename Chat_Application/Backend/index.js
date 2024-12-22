@@ -5,6 +5,7 @@ const userRoutes = require("./Routes/userRoutes");
 
 const app = express();
 dotenv.config();
+app.use(express.json());
 
 const connectDb = async () => {
   try {
@@ -20,7 +21,7 @@ app.get("/", (req, res) => {
   res.send("API is working1");
 });
 
-app.use("user/", userRoutes);
+app.use("/user", userRoutes);
 
 const PORT = process.env.PORT || 8080;
 

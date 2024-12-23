@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "npm run dev"
   },
   "dependencies": {
     "@emotion/react": "^11.13.5",
@@ -15,6 +16,7 @@
     "@mui/icons-material": "^6.1.10",
     "@mui/material": "^6.1.10",
     "@reduxjs/toolkit": "^2.5.0",
+    "axios": "^1.7.9",
     "motion": "^11.15.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

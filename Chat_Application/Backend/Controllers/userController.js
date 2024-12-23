@@ -3,20 +3,32 @@ const UserModel = require("../models/userModel");
 const expressAsyncHandler = require("express-async-handler");
 const generateToken = require("../Config/generateToken");
 
-const loginController = expressAsyncHandler(async () => {
+const loginController = expressAsyncHandler(async (req, res) => {
+  console.log(req.body);
+
   const { name, password } = req.body;
 
-  const user = UserModel.findOne({ name });
+  if (!name || !password) {
+    res.status(400);
+    throw new Error("Please provide both name and password");
+  }
+
+  const user = await UserModel.findOne({ name });
+
+  console.log(await user.matchPassword(password));
 
   if (user && (await user.matchPassword(password))) {
-    res.json({
+    const response = {
       _id: user._id,
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
       token: generateToken(user._id),
-    });
+    };
+    console.log(response);
+    res.json(response);
   } else {
+    res.status(401);
     throw new Error("Invalid Username or Password");
   }
 });

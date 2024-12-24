@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ConversationData from "./ConversationData";
 import logo from "../Images/live-chat_welcome.png";
 import { IconButton } from "@mui/material";
@@ -6,8 +6,10 @@ import SearchIcon from "@mui/icons-material/Search";
 import "./style.css";
 import { AnimatePresence, motion, animate, stagger } from "motion/react";
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 //${darkMode ? "" : ""}
-const UserGroups = () => {
+const User = () => {
   React.useEffect(() => {
     animate(
       ".list-item",
@@ -25,6 +27,33 @@ const UserGroups = () => {
   } else {
     document.body.classList.remove("dark");
   }
+
+  //user auth middleware
+  const [refresh, setRefresh] = useState(true);
+  const [users, setUsers] = useState([]);
+
+  const userData = JSON.parse(localStorage.getItem("userData"));
+  console.log("Data from localstorage : ", userData);
+  const nav = useNavigate();
+
+  if (!userData) {
+    console.log("User not Authenticated");
+    nav(-1);
+  }
+
+  useEffect(() => {
+    console.log("Users refreshed");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userData.data.token}`,
+      },
+    };
+    axios.get("http://localhost:8080/user/fetchUsers", config).then((data) => {
+      console.log("UData refreshed in Users panel ");
+      setUsers(data.data);
+      setRefresh(!refresh);
+    });
+  }, [refresh]);
 
   return (
     <AnimatePresence>
@@ -51,7 +80,7 @@ const UserGroups = () => {
             alt=""
           />
           <p className="ug-title lg:text-2xl lg:font-semibold lg:text-zinc-500">
-            Online Users
+            Available Users
           </p>
         </div>
         <div
@@ -198,4 +227,4 @@ const UserGroups = () => {
   );
 };
 
-export default UserGroups;
+export default User;

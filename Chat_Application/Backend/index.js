@@ -2,6 +2,8 @@ const express = require("express");
 const dotenv = require("dotenv");
 const { default: mongoose } = require("mongoose");
 const userRoutes = require("./Routes/userRoutes");
+const chatRoutes = require("./Routes/userRoutes");
+const messageRoutes = require("./Routes/messageRoutes");
 
 const app = express();
 dotenv.config();
@@ -20,6 +22,10 @@ connectDb();
 app.get("/", (req, res) => {
   res.send("API is working1");
 });
+
+app.use("/user", userRoutes);
+app.use("/chat", chatRoutes);
+app.use("/message", messageRoutes);
 
 app.use("/user", userRoutes);
 

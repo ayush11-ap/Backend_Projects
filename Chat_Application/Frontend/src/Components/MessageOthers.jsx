@@ -1,8 +1,7 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
-const MessageOthers = () => {
-  const dispatch = useDispatch();
+const MessageOthers = ({ props }) => {
   const darkMode = useSelector((state) => state.themeKey);
 
   if (darkMode) {
@@ -20,7 +19,7 @@ const MessageOthers = () => {
               : "lg:text-white lg:bg-[#d9d9d9]"
           }`}
         >
-          O
+          {props.sender.name[0]}
         </p>
         <div
           className={`other-txt-content lg:min-w-40  lg:px-3 lg:py-3 lg:m-3 lg:rounded-3xl lg:mt-3 lg:flex lg:flex-col ${
@@ -34,22 +33,22 @@ const MessageOthers = () => {
               darkMode ? "dark:text-[#38BDF8]" : "text-[rgba(0,0,0,0.54)]"
             }`}
           >
-            Other User
+            {props.sender.name}
           </p>
           <p
             className={`con-lastMessage lg:text-sm mt-1 ${
               darkMode ? "dark:text-[#8F9DB2]" : "text-[rgba(0,0,0,0.54)]"
             }`}
           >
-            Hii! This is a sample misal lorem30
+            {props.content}
           </p>
-          <p
+          {/* <p
             className={`con-lastMessage lg:text-sm lg:self-end lg:mt-[6px]  ${
               darkMode ? "dark:text-[#8F9DB2]" : "text-[rgba(0,0,0,0.54)]"
             }`}
           >
             9:03 am
-          </p>
+          </p> */}
         </div>
       </div>
     </div>

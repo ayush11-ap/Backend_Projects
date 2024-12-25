@@ -1,10 +1,18 @@
 import React from "react";
 import logo from "../Images/live-chat_welcome.png";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const WelcomePage = () => {
-  const dispatch = useDispatch();
   const darkMode = useSelector((state) => state.themeKey);
+  const userData = JSON.parse(localStorage.getItem("userData"));
+  console.log(userData);
+  const nav = useNavigate();
+  if (!userData) {
+    console.log("User not Authenticated");
+    nav("/");
+  }
 
   // Apply theme to the entire app
   if (darkMode) {
@@ -18,7 +26,16 @@ const WelcomePage = () => {
         darkMode ? "dark:text-[#8F9DB2]" : "text-[rgba(0,0,0,0.54)]"
       }`}
     >
-      <img src={logo} alt="" className="welcome-logo" />
+      <motion.img
+        drag
+        whileTap={{ scale: 1.05, rotate: 360 }}
+        src={logo}
+        alt=""
+        className="welcome-logo"
+      />
+      <span className="lg:text-2xl my-4 italic text-zinc-800">
+        Hi, {userData.data.name} 👋
+      </span>
       <p>View and text directly to people present in the chat Rooms.</p>
     </div>
   );

@@ -2,10 +2,11 @@ import React from "react";
 import ConversationData from "./ConversationData";
 import logo from "../Images/live-chat_welcome.png";
 import { IconButton } from "@mui/material";
+import RefreshIcon from "@mui/icons-material/Refresh";
 import SearchIcon from "@mui/icons-material/Search";
 import "./style.css";
 import { AnimatePresence, motion, animate, stagger } from "motion/react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 //${darkMode ? "" : ""}
 const Groups = () => {
   React.useEffect(() => {
@@ -16,15 +17,40 @@ const Groups = () => {
     );
   }, []);
 
-  const dispatch = useDispatch();
   const darkMode = useSelector((state) => state.themeKey); // Redux state for theme
-
   // Apply theme to the entire app
   if (darkMode) {
     document.body.classList.add("dark");
   } else {
     document.body.classList.remove("dark");
   }
+
+  const { refresh, setRefresh } = useContext(myContext);
+  const [groups, SetGroups] = useState([]);
+  const userData = JSON.parse(localStorage.getItem("userData"));
+  // console.log("Data from LocalStorage : ", userData);
+  const nav = useNavigate();
+  if (!userData) {
+    console.log("User not Authenticated");
+    nav("/");
+  }
+
+  const user = userData.data;
+  useEffect(() => {
+    console.log("Users refreshed : ", user.token);
+    const config = {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+
+    axios
+      .get("http://localhost:8080/chat/fetchGroups", config)
+      .then((response) => {
+        console.log("Group Data from API ", response.data);
+        SetGroups(response.data);
+      });
+  }, [refresh]);
 
   return (
     <AnimatePresence>
@@ -53,6 +79,14 @@ const Groups = () => {
           <p className="ug-title lg:text-2xl lg:font-semibold lg:text-zinc-500">
             Groups
           </p>
+          <IconButton
+            className={"icon" + (lightTheme ? "" : " dark")}
+            onClick={() => {
+              setRefresh(!refresh);
+            }}
+          >
+            <RefreshIcon />
+          </IconButton>
         </div>
         <div
           className={`sb-search hidden md:block lg:bg-white lg:rounded-2xl lg:py-1 lg:px-1 lg:m-2 lg:mr-6 lg:flex lg:items-center ${
@@ -82,116 +116,52 @@ const Groups = () => {
            : "shadow-[3px_3px_0px_0px_rgba(0,_0,_0,_0.1)]"
        }`}
         >
-          {/* Staggered animation for list items */}
-
-          {/* div 1 */}
-          <motion.div
-            whileHover={{ scale: 1.01 }}
-            whileTap={{ scale: 0.98 }}
-            className={`list-item lg:flex lg:items-center  lg:rounded-2xl lg:px-3 lg:py-2 lg:m-3 lg:transition-all  lg:select-none ${
-              darkMode
-                ? "dark:bg-[#1E293B] dark:border-[1.2px] dark:border-[#404872]"
-                : "lg:bg-white lg:shadow-[-4px_4px_5px_0px_rgba(0,_0,_0,_0.1)]"
-            }`}
-          >
-            <p
-              className={`con-icon lg:[grid-area:1/1/3/2] lg:flex lg:justify-center lg:items-center  lg:font-sans lg:text-4xl lg:font-bold  lg:h-11 lg:w-11 lg:p-1 lg:rounded-full lg:justify-self-center lg:self-center ${
-                darkMode
-                  ? "dark:bg-white dark:text-[#38BDF8]"
-                  : "lg:bg-[#d9d9d9] lg:text-white"
-              }`}
-            >
-              T
-            </p>
-            <p
-              className={`con-title lg:[grid-area:1/2/2/4] font-bold lg:ml-2 lg:text-xl  ${
-                darkMode ? "dark:text-[#38BDF8]" : "text-[rgba(0,0,0,0.54)]"
-              }`}
-            >
-              Test Group
-            </p>
-          </motion.div>
-          {/* div 1 */}
-          <motion.div
-            whileHover={{ scale: 1.01 }}
-            whileTap={{ scale: 0.98 }}
-            className={`list-item lg:flex lg:items-center  lg:rounded-2xl lg:px-3 lg:py-2 lg:m-3 lg:transition-all  lg:select-none ${
-              darkMode
-                ? "dark:bg-[#1E293B] dark:border-[1.2px] dark:border-[#404872]"
-                : "lg:bg-white lg:shadow-[-4px_4px_5px_0px_rgba(0,_0,_0,_0.1)]"
-            }`}
-          >
-            <p
-              className={`con-icon lg:[grid-area:1/1/3/2] lg:flex lg:justify-center lg:items-center  lg:font-sans lg:text-4xl lg:font-bold  lg:h-11 lg:w-11 lg:p-1 lg:rounded-full lg:justify-self-center lg:self-center ${
-                darkMode
-                  ? "dark:bg-white dark:text-[#38BDF8]"
-                  : "lg:bg-[#d9d9d9] lg:text-white"
-              }`}
-            >
-              T
-            </p>
-            <p
-              className={`con-title lg:[grid-area:1/2/2/4] font-bold lg:ml-2 lg:text-xl  ${
-                darkMode ? "dark:text-[#38BDF8]" : "text-[rgba(0,0,0,0.54)]"
-              }`}
-            >
-              Test Group
-            </p>
-          </motion.div>
-          {/* div 1 */}
-          <motion.div
-            whileHover={{ scale: 1.01 }}
-            whileTap={{ scale: 0.98 }}
-            className={`list-item lg:flex lg:items-center  lg:rounded-2xl lg:px-3 lg:py-2 lg:m-3 lg:transition-all  lg:select-none ${
-              darkMode
-                ? "dark:bg-[#1E293B] dark:border-[1.2px] dark:border-[#404872]"
-                : "lg:bg-white lg:shadow-[-4px_4px_5px_0px_rgba(0,_0,_0,_0.1)]"
-            }`}
-          >
-            <p
-              className={`con-icon lg:[grid-area:1/1/3/2] lg:flex lg:justify-center lg:items-center  lg:font-sans lg:text-4xl lg:font-bold  lg:h-11 lg:w-11 lg:p-1 lg:rounded-full lg:justify-self-center lg:self-center ${
-                darkMode
-                  ? "dark:bg-white dark:text-[#38BDF8]"
-                  : "lg:bg-[#d9d9d9] lg:text-white"
-              }`}
-            >
-              T
-            </p>
-            <p
-              className={`con-title lg:[grid-area:1/2/2/4] font-bold lg:ml-2 lg:text-xl  ${
-                darkMode ? "dark:text-[#38BDF8]" : "text-[rgba(0,0,0,0.54)]"
-              }`}
-            >
-              Test Group
-            </p>
-          </motion.div>
-          {/* div 1 */}
-          <motion.div
-            whileHover={{ scale: 1.01 }}
-            whileTap={{ scale: 0.98 }}
-            className={`list-item lg:flex lg:items-center  lg:rounded-2xl lg:px-3 lg:py-2 lg:m-3 lg:transition-all  lg:select-none ${
-              darkMode
-                ? "dark:bg-[#1E293B] dark:border-[1.2px] dark:border-[#404872]"
-                : "lg:bg-white lg:shadow-[-4px_4px_5px_0px_rgba(0,_0,_0,_0.1)]"
-            }`}
-          >
-            <p
-              className={`con-icon lg:[grid-area:1/1/3/2] lg:flex lg:justify-center lg:items-center  lg:font-sans lg:text-4xl lg:font-bold  lg:h-11 lg:w-11 lg:p-1 lg:rounded-full lg:justify-self-center lg:self-center ${
-                darkMode
-                  ? "dark:bg-white dark:text-[#38BDF8]"
-                  : "lg:bg-[#d9d9d9] lg:text-white"
-              }`}
-            >
-              T
-            </p>
-            <p
-              className={`con-title lg:[grid-area:1/2/2/4] font-bold lg:ml-2 lg:text-xl  ${
-                darkMode ? "dark:text-[#38BDF8]" : "text-[rgba(0,0,0,0.54)]"
-              }`}
-            >
-              Test Group
-            </p>
-          </motion.div>
+          {groups.map((group, index) => {
+            return (
+              <motion.div
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.98 }}
+                className={`list-item lg:flex lg:items-center  lg:rounded-2xl lg:px-3 lg:py-2 lg:m-3 lg:transition-all  lg:select-none ${
+                  darkMode
+                    ? "dark:bg-[#1E293B] dark:border-[1.2px] dark:border-[#404872]"
+                    : "lg:bg-white lg:shadow-[-4px_4px_5px_0px_rgba(0,_0,_0,_0.1)]"
+                }`}
+                key={index}
+                onClick={() => {
+                  console.log("Creating Chat with Group", group.name);
+                  const config = {
+                    headers: {
+                      Authorization: `Bearer ${userData.data.token}`,
+                    },
+                  };
+                  axios.post(
+                    "http://localhost:8080/chat/",
+                    {
+                      userId: user._id,
+                    },
+                    config
+                  );
+                }}
+              >
+                <p
+                  className={`con-icon lg:[grid-area:1/1/3/2] lg:flex lg:justify-center lg:items-center  lg:font-sans lg:text-4xl lg:font-bold  lg:h-11 lg:w-11 lg:p-1 lg:rounded-full lg:justify-self-center lg:self-center ${
+                    darkMode
+                      ? "dark:bg-white dark:text-[#38BDF8]"
+                      : "lg:bg-[#d9d9d9] lg:text-white"
+                  }`}
+                >
+                  T
+                </p>
+                <p
+                  className={`con-title lg:[grid-area:1/2/2/4] font-bold lg:ml-2 lg:text-xl  ${
+                    darkMode ? "dark:text-[#38BDF8]" : "text-[rgba(0,0,0,0.54)]"
+                  }`}
+                >
+                  {group.chatName}
+                </p>
+              </motion.div>
+            );
+          })}
         </div>
       </motion.div>
     </AnimatePresence>

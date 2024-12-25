@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ConversationData from "./ConversationData";
 import logo from "../Images/live-chat_welcome.png";
 import { IconButton } from "@mui/material";
@@ -8,9 +8,11 @@ import { AnimatePresence, motion, animate, stagger } from "motion/react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import RefreshIcon from "@mui/icons-material/Refresh";
+
 //${darkMode ? "" : ""}
 const User = () => {
-  React.useEffect(() => {
+  useEffect(() => {
     animate(
       ".list-item",
       { x: [-20, 0], opacity: [0, 1] },
@@ -82,6 +84,14 @@ const User = () => {
           <p className="ug-title lg:text-2xl lg:font-semibold lg:text-zinc-500">
             Available Users
           </p>
+          <IconButton
+            className="icon dark:text-white"
+            onClick={() => {
+              setRefresh(!refresh);
+            }}
+          >
+            <RefreshIcon />
+          </IconButton>
         </div>
         <div
           className={`sb-search hidden md:block lg:bg-white lg:rounded-2xl lg:py-1 lg:px-1 lg:m-2 lg:mr-6 lg:flex lg:items-center ${
@@ -111,116 +121,52 @@ const User = () => {
            : "shadow-[3px_3px_0px_0px_rgba(0,_0,_0,_0.1)]"
        }`}
         >
-          {/* Staggered animation for list items */}
-
-          {/* div 1 */}
-          <motion.div
-            whileHover={{ scale: 1.01 }}
-            whileTap={{ scale: 0.98 }}
-            className={`list-item lg:flex lg:items-center  lg:rounded-2xl lg:px-3 lg:py-2 lg:m-3 lg:transition-all  lg:select-none ${
-              darkMode
-                ? "dark:bg-[#1E293B] dark:border-[1.2px] dark:border-[#404872]"
-                : "lg:bg-white lg:shadow-[-4px_4px_5px_0px_rgba(0,_0,_0,_0.1)]"
-            }`}
-          >
-            <p
-              className={`con-icon lg:[grid-area:1/1/3/2] lg:flex lg:justify-center lg:items-center  lg:font-sans lg:text-4xl lg:font-bold  lg:h-11 lg:w-11 lg:p-1 lg:rounded-full lg:justify-self-center lg:self-center ${
-                darkMode
-                  ? "dark:bg-white dark:text-[#38BDF8]"
-                  : "lg:bg-[#d9d9d9] lg:text-white"
-              }`}
-            >
-              A
-            </p>
-            <p
-              className={`con-title lg:[grid-area:1/2/2/4] font-bold lg:ml-2 lg:text-xl  ${
-                darkMode ? "dark:text-[#38BDF8]" : "text-[rgba(0,0,0,0.54)]"
-              }`}
-            >
-              Aayush
-            </p>
-          </motion.div>
-          {/* div 1 */}
-          <motion.div
-            whileHover={{ scale: 1.01 }}
-            whileTap={{ scale: 0.98 }}
-            className={`list-item lg:flex lg:items-center  lg:rounded-2xl lg:px-3 lg:py-2 lg:m-3 lg:transition-all  lg:select-none ${
-              darkMode
-                ? "dark:bg-[#1E293B] dark:border-[1.2px] dark:border-[#404872]"
-                : "lg:bg-white lg:shadow-[-4px_4px_5px_0px_rgba(0,_0,_0,_0.1)]"
-            }`}
-          >
-            <p
-              className={`con-icon lg:[grid-area:1/1/3/2] lg:flex lg:justify-center lg:items-center  lg:font-sans lg:text-4xl lg:font-bold  lg:h-11 lg:w-11 lg:p-1 lg:rounded-full lg:justify-self-center lg:self-center ${
-                darkMode
-                  ? "dark:bg-white dark:text-[#38BDF8]"
-                  : "lg:bg-[#d9d9d9] lg:text-white"
-              }`}
-            >
-              A
-            </p>
-            <p
-              className={`con-title lg:[grid-area:1/2/2/4] font-bold lg:ml-2 lg:text-xl  ${
-                darkMode ? "dark:text-[#38BDF8]" : "text-[rgba(0,0,0,0.54)]"
-              }`}
-            >
-              Aayush
-            </p>
-          </motion.div>
-          {/* div 1 */}
-          <motion.div
-            whileHover={{ scale: 1.01 }}
-            whileTap={{ scale: 0.98 }}
-            className={`list-item lg:flex lg:items-center  lg:rounded-2xl lg:px-3 lg:py-2 lg:m-3 lg:transition-all  lg:select-none ${
-              darkMode
-                ? "dark:bg-[#1E293B] dark:border-[1.2px] dark:border-[#404872]"
-                : "lg:bg-white lg:shadow-[-4px_4px_5px_0px_rgba(0,_0,_0,_0.1)]"
-            }`}
-          >
-            <p
-              className={`con-icon lg:[grid-area:1/1/3/2] lg:flex lg:justify-center lg:items-center  lg:font-sans lg:text-4xl lg:font-bold  lg:h-11 lg:w-11 lg:p-1 lg:rounded-full lg:justify-self-center lg:self-center ${
-                darkMode
-                  ? "dark:bg-white dark:text-[#38BDF8]"
-                  : "lg:bg-[#d9d9d9] lg:text-white"
-              }`}
-            >
-              A
-            </p>
-            <p
-              className={`con-title lg:[grid-area:1/2/2/4] font-bold lg:ml-2 lg:text-xl  ${
-                darkMode ? "dark:text-[#38BDF8]" : "text-[rgba(0,0,0,0.54)]"
-              }`}
-            >
-              Aayush
-            </p>
-          </motion.div>
-          {/* div 1 */}
-          <motion.div
-            whileHover={{ scale: 1.01 }}
-            whileTap={{ scale: 0.98 }}
-            className={`list-item lg:flex lg:items-center  lg:rounded-2xl lg:px-3 lg:py-2 lg:m-3 lg:transition-all  lg:select-none ${
-              darkMode
-                ? "dark:bg-[#1E293B] dark:border-[1.2px] dark:border-[#404872]"
-                : "lg:bg-white lg:shadow-[-4px_4px_5px_0px_rgba(0,_0,_0,_0.1)]"
-            }`}
-          >
-            <p
-              className={`con-icon lg:[grid-area:1/1/3/2] lg:flex lg:justify-center lg:items-center  lg:font-sans lg:text-4xl lg:font-bold  lg:h-11 lg:w-11 lg:p-1 lg:rounded-full lg:justify-self-center lg:self-center ${
-                darkMode
-                  ? "dark:bg-white dark:text-[#38BDF8]"
-                  : "lg:bg-[#d9d9d9] lg:text-white"
-              }`}
-            >
-              A
-            </p>
-            <p
-              className={`con-title lg:[grid-area:1/2/2/4] font-bold lg:ml-2 lg:text-xl  ${
-                darkMode ? "dark:text-[#38BDF8]" : "text-[rgba(0,0,0,0.54)]"
-              }`}
-            >
-              Aayush
-            </p>
-          </motion.div>
+          {users.map((user, index) => {
+            return (
+              <motion.div
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.98 }}
+                className={`list-item lg:flex lg:items-center  lg:rounded-2xl lg:px-3 lg:py-2 lg:m-3 lg:transition-all  lg:select-none ${
+                  darkMode
+                    ? "dark:bg-[#1E293B] dark:border-[1.2px] dark:border-[#404872]"
+                    : "lg:bg-white lg:shadow-[-4px_4px_5px_0px_rgba(0,_0,_0,_0.1)]"
+                }`}
+                onClick={() => {
+                  console.log("Creating chat with ", user.name);
+                  const config = {
+                    headers: {
+                      Authorization: `Bearer ${userData.data.token}`,
+                    },
+                  };
+                  axios.post(
+                    "http://localhost:8080/chat/",
+                    {
+                      userId: user._id,
+                    },
+                    config
+                  );
+                  // dispatch(refreshSidebarFun());
+                }}
+              >
+                <p
+                  className={`con-icon lg:[grid-area:1/1/3/2] lg:flex lg:justify-center lg:items-center  lg:font-sans lg:text-4xl lg:font-bold  lg:h-11 lg:w-11 lg:p-1 lg:rounded-full lg:justify-self-center lg:self-center ${
+                    darkMode
+                      ? "dark:bg-white dark:text-[#38BDF8]"
+                      : "lg:bg-[#d9d9d9] lg:text-white"
+                  }`}
+                >
+                  {user.name[0]}
+                </p>
+                <p
+                  className={`con-title lg:[grid-area:1/2/2/4] font-bold lg:ml-2 lg:text-xl  ${
+                    darkMode ? "dark:text-[#38BDF8]" : "text-[rgba(0,0,0,0.54)]"
+                  }`}
+                >
+                  {user.name}
+                </p>
+              </motion.div>
+            );
+          })}
         </div>
       </motion.div>
     </AnimatePresence>

@@ -1,8 +1,7 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
-const MessageSelf = () => {
-  const dispatch = useDispatch();
+const MessageSelf = ({ props }) => {
   const darkMode = useSelector((state) => state.themeKey);
 
   if (darkMode) {
@@ -19,14 +18,14 @@ const MessageSelf = () => {
             : "lg:bg-emerald-200"
         }`}
       >
-        <p>This is sample misal pav</p>
-        <p
+        <p>{props.content}</p>
+        {/* <p
           className={`self-timeStamp lg:text-sm  lg:self-end lg:font-light ${
             darkMode ? "dark:text-[#d9d9d9]" : "text-[rgba(0,0,0,0.54)]"
           }`}
         >
           9:03 am
-        </p>
+        </p> */}
       </div>
     </div>
   );

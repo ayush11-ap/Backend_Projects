@@ -15,10 +15,11 @@ import {
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  // ? material ui
+  // ? material ui password field code
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -32,19 +33,50 @@ const Login = () => {
   };
   //! end
 
-  const [isLoginMode, setIsLoginMode] = useState(true);
+  const [showlogin, setShowLogin] = useState(false);
   const [data, setData] = useState({ name: "", email: "", password: "" });
   const [loading, setLoading] = useState(false);
 
-  const [status, setStatus] = useState(""); // Unified status for login and signup
+  const [logInStatus, setLogInStatus] = React.useState("");
+  const [signInStatus, setSignInStatus] = React.useState("");
+
   const navigate = useNavigate();
 
   const changeHandler = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
-  //! Submit Handler
-  const submitHandler = async () => {
+  //!login
+  const loginHandler = async (e) => {
+    setLoading(true);
+    console.log(data);
+    try {
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+        },
+      };
+
+      const response = await axios.post(
+        "http://localhost:8080/user/login/",
+        data,
+        config
+      );
+      console.log("Login : ", response);
+      setLogInStatus({ msg: "Success", key: Math.random() });
+      setLoading(false);
+      localStorage.setItem("userData", JSON.stringify(response));
+      navigate("/app/welcome");
+    } catch (error) {
+      setLogInStatus({
+        msg: "Invalid User name or Password",
+        key: Math.random(),
+      });
+    }
+    setLoading(false);
+  };
+
+  const signUpHandler = async () => {
     setLoading(true);
     try {
       const config = {
@@ -53,30 +85,32 @@ const Login = () => {
         },
       };
 
-      const url = isLoginMode
-        ? "http://localhost:8080/user/login/"
-        : "http://localhost:8080/user/register/";
-
-      const response = await axios.post(url, data, config);
-
-      console.log(isLoginMode ? "Login" : "Sign Up", response);
-
-      setStatus({ msg: "Success", key: Math.random() });
-      localStorage.setItem("userData", JSON.stringify(response));
-
+      const response = await axios.post(
+        "http://localhost:8080/user/register/",
+        data,
+        config
+      );
+      console.log(response);
+      setSignInStatus({ msg: "Success", key: Math.random() });
       navigate("/app/welcome");
+      localStorage.setItem("userData", JSON.stringify(response));
+      setLoading(false);
     } catch (error) {
-      const errorMessage = isLoginMode
-        ? "Invalid User name or Password"
-        : error.response?.status === 405
-        ? "User with this email ID already exists"
-        : error.response?.status === 406
-        ? "User name already taken"
-        : "Error occurred";
-
-      setStatus({ msg: errorMessage, key: Math.random() });
+      console.log(error);
+      if (error.response.status === 405) {
+        setLogInStatus({
+          msg: "User with this email ID already Exists",
+          key: Math.random(),
+        });
+      }
+      if (error.response.status === 406) {
+        setLogInStatus({
+          msg: "User Name already Taken, Please take another one",
+          key: Math.random(),
+        });
+      }
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
@@ -92,12 +126,13 @@ const Login = () => {
         <div className="image-cont lg:flex-[0.4] lg:flex lg:justify-center lg:items-center">
           <img src={logo} alt="" />
         </div>
-        <div className="login-box lg:flex-[0.6] lg:bg-white lg:rounded-3xl lg:m-3 lg:text-sky-400 lg:font-bold lg:flex lg:flex-col lg:justify-center lg:items-center lg:gap-5 lg:shadow-xl">
-          <p className="login-text text-sky-400 lg:text-2xl">
-            {isLoginMode ? "Login to your Account" : "Create New Account"}
-          </p>
 
-          {!isLoginMode && (
+        {showlogin && (
+          <div className="login-box lg:flex-[0.6] lg:bg-white lg:rounded-3xl lg:m-3 lg:text-sky-400 lg:font-bold lg:flex lg:flex-col lg:justify-center lg:items-center lg:gap-5 lg:shadow-xl">
+            <p className="login-text text-sky-400 lg:text-2xl">
+              Login to your Account
+            </p>
+
             <TextField
               onChange={changeHandler}
               label="Enter Username"
@@ -114,73 +149,174 @@ const Login = () => {
               }}
               name="name"
               onKeyDown={(event) => {
-                if (event.code === "Enter") submitHandler();
+                if (event.code == "Enter") {
+                  loginHandler();
+                }
               }}
             />
-          )}
-          <TextField
-            onChange={changeHandler}
-            id="outlined-basic"
-            label="Enter Email"
-            sx={{ m: 1, width: "38ch" }}
-            variant="outlined"
-            name="email"
-            onKeyDown={(event) => {
-              if (event.code === "Enter") submitHandler();
-            }}
-          />
 
-          <FormControl sx={{ m: 1, width: "38ch" }} variant="outlined">
-            <InputLabel htmlFor="outlined-adornment-password">
-              Password
-            </InputLabel>
-            <OutlinedInput
+            {/* <TextField
               onChange={changeHandler}
-              id="outlined-adornment-password"
-              type={showPassword ? "text" : "password"}
-              name="password"
+              id="outlined-basic"
+              label="Enter Email"
+              sx={{ m: 1, width: "38ch" }}
+              variant="outlined"
+              name="email"
               onKeyDown={(event) => {
                 if (event.code === "Enter") submitHandler();
               }}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label={
-                      showPassword
-                        ? "hide the password"
-                        : "display the password"
-                    }
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                    onMouseUp={handleMouseUpPassword}
-                    edge="end"
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              }
-              label="Password"
+            /> */}
+
+            <FormControl sx={{ m: 1, width: "38ch" }} variant="outlined">
+              <InputLabel htmlFor="outlined-adornment-password">
+                Password
+              </InputLabel>
+              <OutlinedInput
+                onChange={changeHandler}
+                id="outlined-adornment-password"
+                type={showPassword ? "text" : "password"}
+                name="password"
+                onKeyDown={(event) => {
+                  if (event.code == "Enter") {
+                    loginHandler();
+                  }
+                }}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label={
+                        showPassword
+                          ? "hide the password"
+                          : "display the password"
+                      }
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      onMouseUp={handleMouseUpPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                label="Password"
+              />
+            </FormControl>
+
+            {/* button */}
+            <Button variant="outlined" onClick={loginHandler}>
+              LOGIN
+            </Button>
+
+            <p>
+              Don't have an Account -
+              <span
+                className="cursor-pointer text-[#FF7D97]"
+                onClick={() => setShowLogin(false)}
+              >
+                Sign Up
+              </span>
+            </p>
+            {/* {logInStatus ? (
+              <Toaster key={logInStatus.key} message={logInStatus.msg} />
+            ) : null} */}
+          </div>
+        )}
+        {!showlogin && (
+          <div className="login-box lg:flex-[0.6] lg:bg-white lg:rounded-3xl lg:m-3 lg:text-sky-400 lg:font-bold lg:flex lg:flex-col lg:justify-center lg:items-center lg:gap-5 lg:shadow-xl">
+            <p className="login-text text-sky-400 lg:text-2xl">
+              Login to your Account
+            </p>
+
+            <TextField
+              onChange={changeHandler}
+              label="Enter Username"
+              id="outlined-start-adornment"
+              sx={{ m: 1, width: "38ch" }}
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <AccountCircle />
+                    </InputAdornment>
+                  ),
+                },
+              }}
+              name="name"
+              onKeyDown={(event) => {
+                if (event.code == "Enter") {
+                  signUpHandler();
+                }
+              }}
             />
-          </FormControl>
 
-          {/* button */}
-          <Button variant="outlined" onClick={submitHandler}>
-            {isLoginMode ? "LOGIN" : "SIGN UP"}
-          </Button>
+            <TextField
+              onChange={changeHandler}
+              id="outlined-basic"
+              label="Enter Email"
+              sx={{ m: 1, width: "38ch" }}
+              variant="outlined"
+              name="email"
+              onKeyDown={(event) => {
+                if (event.code == "Enter") {
+                  signUpHandler();
+                }
+              }}
+            />
 
-          <p>
-            {isLoginMode
-              ? "Don't have an Account - "
-              : "Already have an Account - "}
-            <span
-              className="cursor-pointer text-[#FF7D97]"
-              onClick={() => setIsLoginMode(!isLoginMode)}
-            >
-              {isLoginMode ? "Sign Up" : "LogIn"}
-            </span>
-          </p>
-          {/* {status && <Toaster key={status.key} message={status.msg} />} */}
-        </div>
+            <FormControl sx={{ m: 1, width: "38ch" }} variant="outlined">
+              <InputLabel htmlFor="outlined-adornment-password">
+                Password
+              </InputLabel>
+              <OutlinedInput
+                onChange={changeHandler}
+                id="outlined-adornment-password"
+                type={showPassword ? "text" : "password"}
+                name="password"
+                onKeyDown={(event) => {
+                  if (event.code == "Enter") {
+                    signUpHandler();
+                  }
+                }}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label={
+                        showPassword
+                          ? "hide the password"
+                          : "display the password"
+                      }
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      onMouseUp={handleMouseUpPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                label="Password"
+              />
+            </FormControl>
+
+            {/* button */}
+            <Button variant="outlined" onClick={signUpHandler}>
+              SIGN UP
+            </Button>
+
+            <p>
+              Already have an Account -
+              <span
+                className="cursor-pointer text-[#FF7D97]"
+                onClick={() => setShowLogin(false)}
+              >
+                Login
+              </span>
+            </p>
+            {/* {signInStatus ? (
+            <Toaster key={logInStatus.key} message={logInStatus.msg} />
+          ) : null} */}
+          </div>
+        )}
       </div>
     </>
   );

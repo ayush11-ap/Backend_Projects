@@ -5,4 +5,6 @@ jsonwebtoken - JWT
 bcrypt - A library to help you hash passwords.
 npm i bcryptjs
 
-completed till 19
+Chat Routes - /accessChat - /fetchChat - /createGroupChat - /fetchGroups - /groupExit - /addSelfToGroup
+
+Message Routes - /allMessages - /sendMessage

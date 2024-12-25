@@ -1,6 +1,4 @@
 const express = require("express");
-
-const { protect } = require("../middleware/authMiddleware");
 const {
   accessChat,
   fetchChats,
@@ -9,6 +7,7 @@ const {
   groupExit,
   addSelfToGroup,
 } = require("../Controllers/chatControllers");
+const { protect } = require("../middleware/authMiddleware");
 const router = express.Router();
 
 router.route("/").post(protect, accessChat);
